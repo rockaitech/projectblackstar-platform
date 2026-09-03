@@ -1,0 +1,2544 @@
+You are building BLACKSTAR, a production-quality AI-powered continuous cyber-risk quantification and security investment optimization platform for a Smart India Hackathon / AICTE cybersecurity problem statement.
+
+IMPORTANT:
+Do not create a generic-looking template or a static mockup.
+Do not merely make the UI look convincing.
+Build a genuinely functional full-stack application with real passive/public intelligence integrations, a real data pipeline, evidence provenance, risk calculations, attack/dependency graph modelling, adaptive attacker simulation, financial loss quantification, investment optimization, and a tamper-evident evidence ledger.
+
+The application must be DEMO-READY, visually impressive, technically credible, and functional enough for a live judge demonstration.
+
+==================================================
+1. CORE PRODUCT
+==================================================
+
+Product name:
+
+BLACKSTAR
+
+Tagline:
+
+QUANTIFY • PREDICT • OPTIMIZE
+
+Purpose:
+
+BLACKSTAR continuously converts publicly observable cyber-risk evidence into:
+
+1. Attack-surface intelligence
+2. Vulnerability intelligence
+3. Evidence-backed asset relationships
+4. Cascading cyber-risk
+5. Financial loss estimates in INR
+6. Adaptive attacker scenarios
+7. Security investment recommendations
+8. Tamper-evident evidence records
+9. Executive decision support
+
+The core differentiator is:
+
+BLACKSTAR does not stop at:
+"Asset has vulnerability X."
+
+It answers:
+
+"What can an attacker realistically reach?"
+"What happens if they compromise this asset?"
+"How does the compromise propagate?"
+"What is the expected financial loss?"
+"How does an adaptive attacker respond to our controls?"
+"Where should the organization spend its limited security budget?"
+"Which evidence supports this conclusion?"
+
+==================================================
+2. ORGANIZATION-AGNOSTIC ARCHITECTURE
+==================================================
+
+THIS IS CRITICAL.
+
+BLACKSTAR MUST NOT be hard-coded to SRMIST.
+
+The platform must be reusable for ANY authorized organization, including:
+
+- Universities
+- Educational institutions
+- Government organizations
+- Banks
+- Hospitals
+- MSMEs
+- Enterprises
+- Public-sector organizations
+- Research institutions
+- Infrastructure operators
+
+The initial demonstration target may be:
+
+SRM Institute of Science and Technology (SRMIST)
+
+but SRMIST is ONLY the initial demonstration organization.
+
+Build a target-management system where the user can enter:
+
+Organization Name
+Primary Domain
+Optional additional domains/subdomains
+Optional organization type
+Optional country/region
+Optional annual revenue / operational value
+Optional number of users
+Optional number of critical systems
+Optional security budget
+
+Example:
+
+Organization:
+SRM Institute of Science and Technology
+
+Domain:
+srmist.ac.in
+
+However, the exact domain MUST NOT be hard-coded as the only possible target.
+
+The entire intelligence pipeline must dynamically operate on whatever authorized domain the user enters.
+
+The UI should have a prominent:
+
+TARGET ORGANIZATION
+
+field and:
+
+PRIMARY DOMAIN
+
+field.
+
+Example:
+
+TARGET ORGANIZATION
+[ SRM Institute of Science and Technology ]
+
+PRIMARY DOMAIN
+[ srmist.ac.in ]
+
+[ ANALYZE TARGET ]
+
+The system should remember previously analyzed targets.
+
+Do not fabricate vulnerabilities or infrastructure for any organization.
+
+Only show information as LIVE when an actual source returned it.
+
+==================================================
+3. SECURITY / AUTHORIZATION REQUIREMENTS
+==================================================
+
+BLACKSTAR must use passive/public intelligence only.
+
+Do NOT implement:
+
+- exploit execution
+- vulnerability exploitation
+- password attacks
+- credential attacks
+- brute force
+- intrusive scanning
+- port scanning against arbitrary targets
+- active vulnerability exploitation
+- malware
+- persistence
+- destructive actions
+
+Use public/indexed intelligence and APIs such as:
+
+- Shodan indexed host data
+- crt.sh certificate transparency
+- NVD
+- CISA Known Exploited Vulnerabilities
+- FIRST EPSS
+- RDAP
+- DNS/public records
+- MITRE ATT&CK
+- other passive intelligence sources
+
+The interface must clearly state:
+
+"Passive / Public Intelligence"
+
+and:
+
+"Only analyze infrastructure you are authorized to assess."
+
+Never imply that BLACKSTAR exploited or actively tested an asset when it did not.
+
+==================================================
+4. DATA PROVENANCE SYSTEM
+==================================================
+
+Every important data point must have provenance.
+
+Use exactly these provenance categories:
+
+LIVE
+CORRELATED
+MODELLED
+SIMULATED
+UNAVAILABLE
+
+Definitions:
+
+LIVE:
+Directly retrieved from an external real source.
+
+CORRELATED:
+Derived by joining multiple real observations.
+
+MODELLED:
+Calculated by BLACKSTAR's risk/financial models.
+
+SIMULATED:
+Generated for demonstration purposes where real-world information is unavailable.
+
+UNAVAILABLE:
+The source could not be reached or returned no usable information.
+
+Never label simulated data as live.
+
+Never label a modelled financial estimate as live intelligence.
+
+Every finding should visibly show its provenance.
+
+Example:
+
+PORT 443
+LIVE — Shodan
+
+Apache HTTP Server 2.4.x
+LIVE — Shodan
+
+CVE-XXXX-XXXXX
+CORRELATED — NVD
+
+Known Exploited
+LIVE — CISA KEV
+
+EPSS
+LIVE — FIRST EPSS
+
+Financial Impact
+MODELLED — BLACKSTAR Risk Engine
+
+==================================================
+5. REAL INTELLIGENCE SOURCES
+==================================================
+
+Build a modular source connector architecture.
+
+PRIORITY 1:
+
+1. SHODAN
+2. crt.sh
+3. NVD
+4. CISA KEV
+5. FIRST EPSS
+
+PRIORITY 2:
+
+6. RDAP / WHOIS
+7. Public DNS information
+8. MITRE ATT&CK
+
+OPTIONAL / PLUGGABLE:
+
+9. Censys
+10. VirusTotal
+11. GreyNoise
+12. SecurityTrails
+13. urlscan
+
+The application must continue functioning when optional APIs are unavailable.
+
+Do NOT fake source connectivity.
+
+If a source is unavailable, show:
+
+SOURCE UNAVAILABLE
+
+instead of:
+
+CONNECTED
+
+==================================================
+6. SHODAN INTEGRATION
+==================================================
+
+Implement real server-side Shodan integration.
+
+Use environment variable:
+
+SHODAN_API_KEY
+
+NEVER expose the API key to frontend JavaScript.
+
+NEVER put API keys in source code.
+
+Use backend endpoints to retrieve Shodan information.
+
+Use passive/indexed Shodan functionality such as:
+
+- host information
+- host details
+- IP information
+- DNS/domain intelligence where appropriate
+- indexed ports
+- services
+- products
+- versions
+- banners where available
+- CPE information where available
+- SSL/TLS information where available
+
+DO NOT use Shodan's active scanning functionality.
+
+Create a source health indicator:
+
+SHODAN
+● LIVE
+Last updated: timestamp
+
+If the key is missing:
+
+SHODAN
+○ CONFIGURATION REQUIRED
+
+Do not display fake data pretending it came from Shodan.
+
+==================================================
+7. CRT.SH INTEGRATION
+==================================================
+
+Use crt.sh for passive certificate transparency intelligence.
+
+Discover:
+
+- certificates
+- subdomains
+- hostnames
+- certificate names
+- first/last observed information where available
+
+Deduplicate hostnames.
+
+Normalize wildcard certificates.
+
+Show:
+
+Certificate Discovery
+
+with provenance:
+
+LIVE — crt.sh
+
+Use discovered domains as intelligence for the attack-surface inventory.
+
+==================================================
+8. NVD INTEGRATION
+==================================================
+
+Integrate the National Vulnerability Database.
+
+Retrieve relevant:
+
+- CVE IDs
+- CVSS scores
+- severity
+- affected products
+- affected versions
+- descriptions
+- references
+- publication dates
+- modification dates
+
+Correlate Shodan product/version/CPE information with NVD.
+
+Do NOT simply list random CVEs.
+
+Only create a vulnerability relationship when there is a reasonable product/version/CPE correlation.
+
+Label this:
+
+CORRELATED — Shodan + NVD
+
+==================================================
+9. CISA KEV
+==================================================
+
+Integrate the CISA Known Exploited Vulnerabilities catalog.
+
+For every correlated CVE, determine:
+
+- Is it in KEV?
+- Date added
+- Known exploited status
+
+Show:
+
+KNOWN EXPLOITED
+LIVE — CISA KEV
+
+This should strongly affect the risk model.
+
+==================================================
+10. EPSS
+==================================================
+
+Integrate FIRST EPSS where possible.
+
+For correlated vulnerabilities retrieve:
+
+- EPSS probability
+- percentile
+- observation date if available
+
+Use EPSS as an attacker-exploitability signal.
+
+Example:
+
+EPSS
+0.82
+LIVE — FIRST EPSS
+
+==================================================
+11. RDAP / DNS
+==================================================
+
+Use public RDAP/DNS information where appropriate.
+
+Retrieve:
+
+- domain information
+- registrar information where available
+- nameservers
+- DNS records
+- IP relationships
+- ASN information where available
+
+Do not collect private information.
+
+==================================================
+12. SOURCE FUSION ENGINE
+==================================================
+
+This is one of the most important components.
+
+Do NOT make BLACKSTAR just a collection of separate API pages.
+
+Build a source fusion engine.
+
+Example chain:
+
+Domain
+↓
+crt.sh certificate discovery
+↓
+Hostname
+↓
+DNS resolution
+↓
+IP
+↓
+Shodan indexed host
+↓
+Port / Service
+↓
+Product / Version / CPE
+↓
+NVD CVE correlation
+↓
+EPSS exploitability
+↓
+CISA KEV status
+↓
+MITRE ATT&CK technique mapping
+↓
+BLACKSTAR risk score
+↓
+Attack graph
+↓
+Financial loss
+↓
+Investment recommendation
+
+This evidence chain should be visible in the UI.
+
+==================================================
+13. ATTACK SURFACE INVENTORY
+==================================================
+
+Create a powerful Attack Surface page.
+
+Show:
+
+- discovered domains
+- subdomains
+- IP addresses
+- ports
+- protocols
+- services
+- products
+- versions
+- technologies
+- certificates
+- vulnerabilities
+- CPEs
+- ASN
+- source
+- last observed timestamp
+- provenance
+
+Use filtering:
+
+All
+Internet-facing
+High risk
+Critical
+Vulnerable
+Certificates
+Services
+Recently changed
+
+Each asset should have an expandable details panel.
+
+Example:
+
+WEB SERVER
+
+portal.example.com
+
+IP:
+LIVE
+
+Ports:
+443
+80
+
+Technology:
+Apache HTTP Server
+
+Version:
+LIVE — Shodan
+
+Vulnerabilities:
+3
+
+Risk:
+HIGH
+
+Evidence:
+Shodan
+crt.sh
+NVD
+EPSS
+CISA KEV
+
+==================================================
+14. ATTACK SURFACE SCORE
+==================================================
+
+Calculate an attack-surface exposure score using actual observations.
+
+Do not simply assign random scores.
+
+Consider:
+
+- number of exposed services
+- risky ports
+- outdated software
+- known vulnerabilities
+- KEV status
+- EPSS
+- internet exposure
+- certificate/domain relationships
+- asset criticality
+- evidence confidence
+
+Show a breakdown explaining WHY the score exists.
+
+==================================================
+15. RISK GRAPH
+==================================================
+
+Build a visually impressive interactive graph.
+
+Nodes can include:
+
+Internet
+↓
+External Web Application
+↓
+Authentication Service
+↓
+Email Infrastructure
+↓
+Administrative Interface
+↓
+Student / Customer Database
+↓
+Financial System
+↓
+Critical Internal Services
+
+BUT:
+
+The graph must be dynamically generated from the target's actual evidence wherever possible.
+
+Do not pretend these systems exist for the target unless evidence supports them.
+
+When evidence is insufficient, clearly label modeled/simulated relationships.
+
+Use node colors based on risk.
+
+Use animated edges to demonstrate propagation.
+
+Allow:
+
+- zoom
+- pan
+- node selection
+- node details
+- relationship inspection
+- risk highlighting
+- attack path highlighting
+
+==================================================
+16. CASCADING RISK MODEL
+==================================================
+
+BLACKSTAR must model how compromise of one asset can affect downstream assets.
+
+For each graph edge calculate:
+
+P(propagation | source compromise)
+
+Factors may include:
+
+- trust relationship
+- shared identity
+- shared infrastructure
+- network dependency
+- service dependency
+- data dependency
+- privilege relationship
+- attacker access
+- asset criticality
+
+Use a probabilistic model.
+
+Display:
+
+Initial Access
+→
+Privilege Gain
+→
+Lateral Movement
+→
+Data Access
+→
+Service Disruption
+→
+Financial Impact
+
+The user must be able to see why the risk propagated.
+
+==================================================
+17. ADAPTIVE ATTACKER / STACKELBERG MODEL
+==================================================
+
+Implement the core game-theoretic concept.
+
+Defender chooses:
+
+security controls / investments
+
+Attacker observes defender posture and chooses:
+
+attack path / target strategy
+
+Model this as a simplified Stackelberg security game.
+
+The attacker should evaluate different attack paths based on:
+
+- probability of success
+- exploitability
+- asset value
+- defensive controls
+- attack cost
+- expected payoff
+
+The defender chooses controls to minimize expected loss.
+
+The UI should explicitly explain:
+
+DEFENDER STRATEGY
+
+ATTACKER RESPONSE
+
+EXPECTED LOSS
+
+OPTIMAL DEFENSE
+
+Do not fake a solver trace.
+
+If using a simplified numerical solver, clearly state:
+
+"BLACKSTAR Stackelberg Optimization Model"
+
+rather than claiming a specific external solver was used.
+
+==================================================
+18. FINANCIAL RISK ENGINE
+==================================================
+
+This is a major differentiator.
+
+Do not only display:
+
+CRITICAL
+HIGH
+MEDIUM
+LOW
+
+Convert cyber risk into financial estimates in INR.
+
+Calculate:
+
+Annualized Loss Expectancy (ALE)
+
+Expected Annual Loss
+
+Median Loss
+
+P75
+
+P90
+
+P95
+
+Confidence Interval
+
+Potential Maximum Loss
+
+Model components such as:
+
+- data breach
+- service downtime
+- incident response
+- regulatory/legal impact
+- recovery
+- operational disruption
+- fraud/financial loss
+- reputational/business impact
+
+Make assumptions editable.
+
+Example:
+
+Estimated cost per hour downtime:
+₹75,000
+
+Records exposed:
+25,000
+
+Estimated cost per record:
+₹800
+
+Incident response:
+₹2,00,000
+
+Recovery:
+₹3,00,000
+
+These values must be explicitly marked:
+
+MODELLED ASSUMPTION
+
+Never pretend the organization supplied these values.
+
+==================================================
+19. MONTE CARLO RISK SIMULATION
+==================================================
+
+Implement an actual Monte Carlo simulation.
+
+Run thousands of scenarios where practical.
+
+Inputs should include uncertainty in:
+
+- probability of initial compromise
+- exploitability
+- propagation
+- asset criticality
+- downtime
+- breach scale
+- response cost
+- recovery cost
+
+Output:
+
+Mean
+Median
+P75
+P90
+P95
+Confidence Interval
+
+Show a distribution chart.
+
+Allow the user to modify assumptions and rerun.
+
+==================================================
+20. WHAT-IF ANALYSIS
+==================================================
+
+Create an interactive What-If mode.
+
+Examples:
+
+"What if MFA is deployed?"
+
+"What if EDR coverage increases from 50% to 90%?"
+
+"What if the internet-facing server is patched?"
+
+"What if the security budget increases to ₹10 lakh?"
+
+"What if the critical database is isolated?"
+
+The system should recalculate:
+
+- attack probability
+- attack paths
+- expected loss
+- P90 loss
+- residual risk
+
+Show before vs after.
+
+==================================================
+21. SECURITY INVESTMENT OPTIMIZER
+==================================================
+
+Create an investment optimization engine.
+
+Input:
+
+Security budget
+
+Example:
+
+₹5,00,000
+
+Available controls:
+
+MFA
+EDR
+WAF
+Network segmentation
+Patch management
+Backup hardening
+Email security
+Identity monitoring
+Cloud security controls
+Incident response capability
+Security awareness
+Vulnerability management
+
+Each control should have modelled:
+
+- cost
+- effectiveness
+- affected attack paths
+- risk reduction
+- implementation coverage
+
+Calculate:
+
+Baseline ALE
+
+Naive allocation
+
+Optimized allocation
+
+Residual ALE
+
+Risk reduction
+
+ROI / value of security investment
+
+Marginal risk reduction per ₹
+
+Show a clear comparison.
+
+Example:
+
+BASELINE
+ALE: ₹14.3L
+
+NAIVE PORTFOLIO
+ALE: ₹8.2L
+
+BLACKSTAR OPTIMAL PORTFOLIO
+ALE: ₹4.1L
+
+Do NOT hard-code these exact values.
+
+They can be used as visual examples only.
+
+The actual values should be calculated dynamically.
+
+==================================================
+22. BUDGET SLIDER
+==================================================
+
+Create a highly visual budget control.
+
+Example:
+
+Security Budget
+
+₹0
+────────────●────────────
+₹50,00,000
+
+As the slider moves, dynamically calculate:
+
+- selected controls
+- expected loss
+- residual risk
+- marginal benefit
+- recommended portfolio
+
+Show:
+
+₹1 invested
+→
+₹X expected risk reduction
+
+==================================================
+23. MARGINAL SECURITY VALUE
+==================================================
+
+Show which control provides the highest incremental value.
+
+Example:
+
+CONTROL
+MFA
+
+Investment:
+₹1,20,000
+
+Expected ALE reduction:
+₹3,40,000
+
+Value:
+2.83x
+
+This must be calculated from the model.
+
+==================================================
+24. EVIDENCE LEDGER
+==================================================
+
+Create a blockchain-inspired evidence ledger.
+
+Do NOT falsely claim that the application is a blockchain if it is not.
+
+Implement a real tamper-evident cryptographic chain using SHA-256.
+
+Every evidence record should contain:
+
+record_id
+timestamp
+source
+target
+observation
+provenance
+previous_hash
+record_hash
+
+The record hash should be calculated from canonicalized record data.
+
+Example:
+
+RECORD #000184
+
+Source:
+Shodan
+
+Observation:
+HTTPS service observed
+
+Timestamp:
+2026-09-03 17:42:10
+
+Previous Hash:
+abc123...
+
+Record Hash:
+def456...
+
+STATUS:
+VERIFIED CHAIN
+
+Allow the user to click a record and inspect the full evidence chain.
+
+Add:
+
+VERIFY LEDGER
+
+The system should recompute the hashes and report:
+
+CHAIN INTEGRITY VERIFIED
+
+or
+
+CHAIN INTEGRITY FAILED
+
+If feasible, create an optional public testnet anchoring feature.
+
+But NEVER claim that data is on-chain unless it was actually anchored.
+
+The core feature is:
+
+TAMPER-EVIDENT EVIDENCE CHAIN
+
+==================================================
+25. EVIDENCE → DECISION TRACE
+==================================================
+
+This should be a signature feature.
+
+For every major risk decision, allow:
+
+"WHY IS THIS HIGH RISK?"
+
+to open a trace.
+
+Example:
+
+HIGH RISK
+
+Because:
+
+1. Internet-facing asset
+   LIVE — Shodan
+
+2. Apache version observed
+   LIVE — Shodan
+
+3. CVE correlated
+   CORRELATED — NVD
+
+4. High EPSS
+   LIVE — FIRST EPSS
+
+5. Listed in CISA KEV
+   LIVE — CISA KEV
+
+6. Critical downstream asset
+   MODELLED — BLACKSTAR graph
+
+7. Financial impact
+   MODELLED — BLACKSTAR financial engine
+
+8. Final risk:
+   ₹X expected annual loss
+
+This makes BLACKSTAR explainable.
+
+==================================================
+26. METHODOLOGY PAGE
+==================================================
+
+Create a polished technical methodology page.
+
+Sections:
+
+1. Passive Intelligence
+
+2. Evidence Fusion
+
+3. Vulnerability Correlation
+
+4. Attack Graph Construction
+
+5. Cascading Risk
+
+6. Adaptive Attacker Model
+
+7. Financial Risk Quantification
+
+8. Monte Carlo Simulation
+
+9. Security Investment Optimization
+
+10. Tamper-Evident Evidence Ledger
+
+11. Continuous Monitoring
+
+12. Future Quantum-Resilience Roadmap
+
+Include formulas in a clean readable manner.
+
+==================================================
+27. QUANTUM ROADMAP
+==================================================
+
+Include quantum security as a future roadmap rather than pretending it is already implemented.
+
+Show:
+
+CURRENT
+
+Classical cryptography monitoring
+
+↓
+
+TRANSITION
+
+Identify cryptographic dependencies
+
+↓
+
+PQC READINESS
+
+Map assets to post-quantum algorithms
+
+↓
+
+FUTURE
+
+Quantum-resilient architecture
+
+This should be presented as:
+
+RESEARCH / ROADMAP
+
+not as an implemented quantum scanner.
+
+==================================================
+28. UI / DESIGN
+==================================================
+
+Completely redesign the existing cream/light UI.
+
+The final interface MUST look like a premium cybersecurity command center.
+
+DO NOT use:
+
+- beige
+- cream
+- warm white
+- generic corporate dashboard styling
+
+Use a dark cybersecurity visual language.
+
+Primary background:
+
+near-black / deep navy
+
+Supporting colors:
+
+electric cyan
+indigo/violet
+emerald
+amber
+red
+
+Use colors semantically:
+
+Cyan:
+live intelligence
+
+Violet:
+analytics / AI / modelling
+
+Amber:
+warning
+
+Red:
+critical risk
+
+Green:
+protected / reduced risk
+
+The UI should feel inspired by:
+
+cybersecurity operations centers
+financial risk terminals
+threat intelligence platforms
+modern AI command centers
+blockchain explorers
+
+But DO NOT copy any specific company's interface.
+
+Use:
+
+- glass panels
+- subtle borders
+- gradients
+- soft glow
+- high-quality charts
+- animated graph edges
+- compact information density
+- excellent typography
+- micro-interactions
+- smooth transitions
+- responsive layout
+
+Do not overdo neon effects.
+
+The interface must remain professional and readable.
+
+==================================================
+29. BLACKSTAR LOGO
+==================================================
+
+The user will upload the official BLACKSTAR logo.
+
+USE THE EXACT PROVIDED IMAGE.
+
+Do NOT:
+
+- redraw it
+- recreate it
+- replace it
+- recolor it
+- distort it
+- stretch it
+- crop it
+- create a different logo
+
+Preserve the exact logo and aspect ratio.
+
+Use it in:
+
+- sidebar
+- login/loading state if present
+- top navigation where appropriate
+- executive dashboard
+- report/export header
+
+The tagline associated with the product is:
+
+QUANTIFY • PREDICT • OPTIMIZE
+
+Do not replace the logo with plain text if the supplied image is available.
+
+==================================================
+30. MAIN NAVIGATION
+==================================================
+
+Create a premium left sidebar.
+
+BLACKSTAR logo at top.
+
+Navigation:
+
+COMMAND CENTER
+
+Overview
+
+Attack Surface
+
+Evidence Fusion
+
+Vulnerability Intelligence
+
+Risk Graph
+
+Financial Risk
+
+Attack Simulation
+
+Investment Optimizer
+
+Evidence Ledger
+
+Methodology
+
+Settings
+
+At the bottom:
+
+LIVE INTELLIGENCE
+Source Health
+
+Target Organization
+
+==================================================
+31. COMMAND CENTER
+==================================================
+
+The Overview page should immediately communicate the organization's cyber-risk posture.
+
+Top:
+
+BLACKSTAR
+
+Cyber Risk Command Center
+
+TARGET:
+[organization]
+
+DOMAIN:
+[domain]
+
+STATUS:
+LIVE INTELLIGENCE
+
+Main KPI cards:
+
+Attack Surface
+X assets
+
+Critical Findings
+X
+
+Expected Annual Loss
+₹X
+
+P90 Loss
+₹X
+
+Risk Reduction Opportunity
+₹X
+
+Then:
+
+Attack Surface Exposure
+
+Risk Trend
+
+Financial Loss Distribution
+
+Top Attack Paths
+
+Top Recommended Controls
+
+Evidence Freshness
+
+Source Health
+
+==================================================
+32. SOURCE HEALTH
+==================================================
+
+Create a compact source status panel.
+
+Example:
+
+SHODAN
+● LIVE
+
+CRT.SH
+● LIVE
+
+NVD
+● LIVE
+
+CISA KEV
+● LIVE
+
+EPSS
+● LIVE
+
+RDAP
+● LIVE
+
+MITRE ATT&CK
+● AVAILABLE
+
+If unavailable:
+
+○ UNAVAILABLE
+
+Do not fake these states.
+
+Show last successful retrieval time.
+
+==================================================
+33. LIVE / MODELLED FILTER
+==================================================
+
+Provide a global filter:
+
+ALL
+
+LIVE
+
+CORRELATED
+
+MODELLED
+
+SIMULATED
+
+UNAVAILABLE
+
+This allows judges to instantly understand which information is real and which is calculated.
+
+==================================================
+34. ATTACK SIMULATION PAGE
+==================================================
+
+Create an interactive attack-path simulation.
+
+The user selects:
+
+Initial target asset
+
+Then BLACKSTAR displays:
+
+ATTACKER ENTRY
+
+↓
+
+EXPLOIT / ACCESS
+
+↓
+
+PRIVILEGE ESCALATION
+
+↓
+
+LATERAL MOVEMENT
+
+↓
+
+DATA ACCESS
+
+↓
+
+SERVICE IMPACT
+
+For each stage display:
+
+Probability
+Expected payoff
+Defensive control
+Residual probability
+
+Use MITRE ATT&CK technique references where appropriate.
+
+Do not perform actual attacks.
+
+This is a mathematical simulation.
+
+==================================================
+35. VULNERABILITY INTELLIGENCE PAGE
+==================================================
+
+Create a vulnerability dashboard.
+
+Show:
+
+CVE
+
+Asset
+
+Product
+
+Version
+
+CVSS
+
+EPSS
+
+KEV
+
+Exposure
+
+Risk
+
+Evidence
+
+Sort by:
+
+Highest risk
+KEV
+EPSS
+CVSS
+Newest
+Most exposed
+
+Provide a vulnerability detail drawer.
+
+==================================================
+36. EVIDENCE FUSION PAGE
+==================================================
+
+Create a visual evidence relationship view.
+
+Example:
+
+portal.example.com
+
+CONNECTED EVIDENCE:
+
+crt.sh
+↓
+DNS
+↓
+IP
+↓
+Shodan
+↓
+Apache
+↓
+NVD
+↓
+CVE
+↓
+EPSS
+↓
+CISA KEV
+↓
+BLACKSTAR RISK
+
+This should visually demonstrate why source fusion is valuable.
+
+==================================================
+37. SCAN / REFRESH
+==================================================
+
+Create:
+
+RUN PASSIVE ANALYSIS
+
+button.
+
+When clicked:
+
+1. Validate domain
+2. Query available passive sources
+3. Normalize results
+4. Deduplicate assets
+5. Correlate vulnerabilities
+6. update evidence
+7. rebuild graph
+8. calculate risk
+9. run financial model
+10. run optimization
+11. update ledger
+
+Show real progress:
+
+Collecting certificates...
+Resolving public records...
+Retrieving indexed host intelligence...
+Correlating vulnerabilities...
+Checking KEV...
+Fetching EPSS...
+Building risk graph...
+Running financial simulation...
+Optimizing controls...
+Updating evidence ledger...
+
+Do not fake progress for an instant result.
+
+==================================================
+38. SCAN HISTORY / CHANGE DETECTION
+==================================================
+
+Store analysis snapshots.
+
+Show:
+
+Previous scan
+Current scan
+
+Changes:
+
+NEW ASSET
+REMOVED ASSET
+NEW PORT
+SERVICE CHANGE
+NEW CERTIFICATE
+NEW VULNERABILITY
+VULNERABILITY RESOLVED
+RISK INCREASE
+RISK DECREASE
+
+This gives BLACKSTAR the "continuous" component.
+
+==================================================
+39. BACKEND ARCHITECTURE
+==================================================
+
+Use a clean modular backend.
+
+Suggested structure:
+
+/server
+  /api
+  /services
+    shodan
+    crtsh
+    nvd
+    cisa
+    epss
+    rdap
+    mitre
+    fusion
+    risk
+    graph
+    optimizer
+    ledger
+  /models
+  /utils
+
+Frontend:
+
+/client
+  /components
+  /pages
+  /charts
+  /graph
+  /hooks
+
+Use clean separation between:
+
+Data collection
+Normalization
+Correlation
+Risk modelling
+Optimization
+Presentation
+
+==================================================
+40. API ENDPOINTS
+==================================================
+
+Create sensible backend APIs such as:
+
+POST /api/targets
+
+GET /api/targets
+
+POST /api/targets/:id/analyze
+
+GET /api/targets/:id/assets
+
+GET /api/targets/:id/evidence
+
+GET /api/targets/:id/vulnerabilities
+
+GET /api/targets/:id/risk
+
+GET /api/targets/:id/graph
+
+POST /api/targets/:id/simulate
+
+POST /api/targets/:id/optimize
+
+GET /api/targets/:id/ledger
+
+GET /api/sources/status
+
+POST /api/what-if
+
+Keep API keys server-side.
+
+==================================================
+41. DATA MODEL
+==================================================
+
+Create persistent models for:
+
+Organization
+
+Target
+
+Domain
+
+Asset
+
+Service
+
+Certificate
+
+Vulnerability
+
+Evidence
+
+AttackPath
+
+RiskScenario
+
+Control
+
+InvestmentPortfolio
+
+Simulation
+
+LedgerRecord
+
+ScanSnapshot
+
+SourceStatus
+
+Every evidence record should retain provenance.
+
+==================================================
+42. ERROR HANDLING
+==================================================
+
+The application must gracefully handle:
+
+API timeout
+invalid API key
+rate limit
+empty response
+network failure
+invalid domain
+no assets found
+partial source failure
+
+Do NOT crash the dashboard.
+
+Example:
+
+SHODAN
+
+RATE LIMITED
+
+Last successful update:
+17:42
+
+Other sources remain operational.
+
+==================================================
+43. NO FAKE DATA POLICY
+==================================================
+
+This is extremely important.
+
+NEVER invent:
+
+- IP addresses
+- ports
+- hostnames
+- CVEs
+- vulnerabilities
+- certificates
+- Shodan results
+- DNS records
+- source timestamps
+- API connectivity
+- organization financial information
+
+If live data is unavailable:
+
+show:
+
+NO LIVE OBSERVATION AVAILABLE
+
+Then allow the risk engine to use clearly marked MODELLED assumptions if appropriate.
+
+For a demonstration-only scenario, simulated data may be generated, but it MUST visibly display:
+
+SIMULATED
+
+Never mix simulated findings into the live attack surface without an obvious label.
+
+==================================================
+44. DEMO MODE
+==================================================
+
+Create a controlled DEMO MODE.
+
+The application should support:
+
+LIVE INTELLIGENCE
+
+and
+
+SIMULATION
+
+modes.
+
+LIVE INTELLIGENCE:
+Only actual retrieved observations.
+
+SIMULATION:
+Uses a clearly labeled synthetic environment to demonstrate the full risk/optimization engine if the real target does not provide enough data.
+
+The header should clearly display:
+
+LIVE INTELLIGENCE
+
+or
+
+SIMULATION
+
+Never display:
+
+DEMO DATA
+
+as the default state.
+
+==================================================
+45. EXECUTIVE VS TECHNICAL VIEW
+==================================================
+
+Provide two viewing modes.
+
+EXECUTIVE:
+
+Focus on:
+
+₹ Expected Loss
+₹ P90 Risk
+Budget
+Risk Reduction
+Top 5 Risks
+Recommended Investment
+Trend
+
+TECHNICAL:
+
+Focus on:
+
+Assets
+Ports
+Services
+CVEs
+CPEs
+EPSS
+KEV
+Attack Techniques
+Evidence
+Graph relationships
+
+==================================================
+46. REPORT EXPORT
+==================================================
+
+Implement a professional report export.
+
+Include:
+
+BLACKSTAR logo
+
+Target organization
+
+Assessment timestamp
+
+Executive summary
+
+Attack surface
+
+Critical findings
+
+Evidence
+
+Risk graph summary
+
+Financial risk
+
+Monte Carlo distribution
+
+Attack paths
+
+Investment recommendation
+
+Evidence ledger verification
+
+Methodology
+
+Data provenance
+
+Clearly distinguish:
+
+LIVE
+CORRELATED
+MODELLED
+SIMULATED
+
+==================================================
+47. PERFORMANCE
+==================================================
+
+Cache source results where appropriate.
+
+Avoid unnecessary API calls.
+
+Use asynchronous collection where possible.
+
+Do not make the UI freeze during analysis.
+
+Use loading states.
+
+Show source-level progress.
+
+==================================================
+48. RESPONSIVE DESIGN
+==================================================
+
+The dashboard should work on:
+
+Desktop
+Laptop
+Tablet
+
+The primary target is a large laptop/projector screen for the SIH judge demonstration.
+
+Make charts and graph highly visible at 1366x768 and larger.
+
+==================================================
+49. VISUAL DETAILS
+==================================================
+
+Make the interface extremely polished.
+
+Use:
+
+- dark glass cards
+- subtle animated background grid
+- cybersecurity-inspired node network
+- glowing graph edges
+- risk heat indicators
+- animated KPI counters
+- compact source badges
+- smooth page transitions
+- hover states
+- expandable evidence drawers
+- interactive charts
+
+Avoid clutter.
+
+The application should look like a serious commercial cyber-risk platform rather than a student CRUD dashboard.
+
+==================================================
+50. IMPORTANT: PRESERVE FUNCTIONALITY
+==================================================
+
+FIRST inspect the existing repository.
+
+Do not blindly delete the existing application.
+
+Identify:
+
+- current framework
+- existing routes
+- existing components
+- existing database
+- existing API structure
+- existing working functionality
+
+Reuse good existing functionality where possible.
+
+Then refactor/rebuild components as necessary to satisfy this specification.
+
+Do not leave dead placeholder pages.
+
+Every navigation item must lead to a functional page.
+
+==================================================
+51. TECHNOLOGY
+==================================================
+
+Use the existing project's stack where practical.
+
+If choosing a stack, prefer:
+
+Frontend:
+React + TypeScript
+
+Styling:
+Tailwind CSS
+
+Charts:
+Recharts or equivalent
+
+Graph:
+React Flow / Cytoscape / D3 / equivalent
+
+Backend:
+Node.js + TypeScript
+
+Database:
+PostgreSQL if available
+
+Use environment variables for secrets.
+
+Do not unnecessarily introduce complex infrastructure that makes the demo fragile.
+
+==================================================
+52. RISK ENGINE DESIGN
+==================================================
+
+Create a transparent scoring/model architecture.
+
+A useful conceptual formulation is:
+
+Risk =
+P(initial access)
+×
+P(success | attack path)
+×
+P(propagation)
+×
+Asset criticality
+×
+Financial impact
+×
+Control effectiveness adjustment
+
+Do not treat this as a universal scientific truth.
+
+Label it:
+
+BLACKSTAR Risk Model
+
+Expose the major inputs.
+
+Allow judges to understand how a score was generated.
+
+==================================================
+53. RISK LEVELS
+==================================================
+
+Use:
+
+CRITICAL
+HIGH
+MEDIUM
+LOW
+MINIMAL
+
+But risk level should be derived from the quantitative model.
+
+Do not simply assign arbitrary labels.
+
+==================================================
+54. CONTINUOUS RISK CONCEPT
+==================================================
+
+The product must communicate:
+
+New evidence
+→
+new correlation
+→
+new risk
+→
+new financial exposure
+→
+new optimal defense
+
+The dashboard should show:
+
+LAST ANALYSIS
+
+NEXT RECOMMENDED REVIEW
+
+CHANGE SINCE LAST ANALYSIS
+
+==================================================
+55. AI POSITIONING
+==================================================
+
+Do not falsely claim that a large language model is performing calculations if it is not.
+
+Position AI intelligently.
+
+BLACKSTAR AI can assist with:
+
+- evidence normalization
+- anomaly interpretation
+- attack-path explanation
+- risk explanation
+- executive summaries
+- recommended controls
+- natural-language what-if analysis
+
+The deterministic numerical engine performs:
+
+- Monte Carlo
+- expected loss
+- optimization
+- probability calculations
+
+Clearly separate:
+
+AI INTERPRETATION
+
+from
+
+QUANTITATIVE RISK ENGINE
+
+==================================================
+56. NATURAL LANGUAGE RISK EXPLANATION
+==================================================
+
+Provide an "Explain Risk" panel.
+
+Example:
+
+"Why did risk increase?"
+
+Answer using actual evidence and model output:
+
+Risk increased because a newly observed internet-facing service increased the probability of initial access. The service was correlated with a vulnerability carrying a high EPSS score. The downstream asset has high criticality, increasing the expected financial impact.
+
+Every factual statement should link back to evidence where possible.
+
+==================================================
+57. JUDGE DEMO FLOW
+==================================================
+
+Optimize the application for a 5-minute live demonstration.
+
+Suggested flow:
+
+STEP 1
+
+Open BLACKSTAR Command Center.
+
+Show:
+
+Target organization
+Live source status
+Risk KPIs
+
+STEP 2
+
+Open Attack Surface.
+
+Show real passive intelligence from Shodan/crt.sh and source provenance.
+
+STEP 3
+
+Open Evidence Fusion.
+
+Show:
+
+Asset
+→ service
+→ version
+→ CVE
+→ EPSS
+→ KEV
+→ risk
+
+STEP 4
+
+Open Risk Graph.
+
+Show an attack path.
+
+Click:
+
+WHY IS THIS HIGH RISK?
+
+Show evidence-backed explanation.
+
+STEP 5
+
+Open Financial Risk.
+
+Show:
+
+Expected Annual Loss
+P90
+Monte Carlo distribution
+
+STEP 6
+
+Open Investment Optimizer.
+
+Set:
+
+Budget
+
+Show:
+
+Naive allocation
+vs
+BLACKSTAR optimized allocation
+
+STEP 7
+
+Increase/decrease budget.
+
+Show real-time change in residual risk.
+
+STEP 8
+
+Open Evidence Ledger.
+
+Click:
+
+VERIFY LEDGER
+
+Show:
+
+CHAIN INTEGRITY VERIFIED
+
+STEP 9
+
+Finish with:
+
+"BLACKSTAR converts cyber observations into financially optimized security decisions."
+
+==================================================
+58. LANDING / LOADING EXPERIENCE
+==================================================
+
+Create a premium loading screen using the supplied BLACKSTAR logo.
+
+Text:
+
+BLACKSTAR
+
+QUANTIFY • PREDICT • OPTIMIZE
+
+INITIALIZING CYBER RISK ENGINE...
+
+Then transition smoothly into the dashboard.
+
+==================================================
+59. SETTINGS
+==================================================
+
+Create Settings page with:
+
+Target organization
+
+Primary domain
+
+Additional domains
+
+Organization type
+
+Financial assumptions
+
+Risk model parameters
+
+Budget
+
+Source configuration
+
+API source status
+
+Simulation settings
+
+==================================================
+60. SOURCE CREDENTIALS
+==================================================
+
+Support environment variables:
+
+SHODAN_API_KEY
+
+NVD_API_KEY
+
+VIRUSTOTAL_API_KEY
+
+CENSYS_API_ID
+
+CENSYS_API_SECRET
+
+GREYNOISE_API_KEY
+
+SECURITYTRAILS_API_KEY
+
+Only use optional keys when present.
+
+Do not require every source to run.
+
+Public sources such as crt.sh, CISA KEV, EPSS, RDAP, and MITRE ATT&CK should work without requiring unnecessary credentials where their public interfaces permit it.
+
+==================================================
+61. SECURITY OF THE APPLICATION
+==================================================
+
+Never expose secrets.
+
+Validate all user inputs.
+
+Prevent SSRF-style behavior in backend requests.
+
+Restrict passive intelligence endpoints appropriately.
+
+Rate limit expensive operations.
+
+Sanitize external data before rendering.
+
+Do not execute arbitrary commands based on user input.
+
+==================================================
+62. FINAL DATA FLOW
+==================================================
+
+Implement this conceptual pipeline:
+
+TARGET
+
+↓
+
+PASSIVE INTELLIGENCE
+
+↓
+
+NORMALIZATION
+
+↓
+
+ASSET DISCOVERY
+
+↓
+
+EVIDENCE FUSION
+
+↓
+
+VULNERABILITY CORRELATION
+
+↓
+
+ATTACK GRAPH
+
+↓
+
+ADAPTIVE ATTACKER MODEL
+
+↓
+
+MONTE CARLO FINANCIAL RISK
+
+↓
+
+STACKELBERG SECURITY INVESTMENT OPTIMIZATION
+
+↓
+
+RECOMMENDED DEFENSE
+
+↓
+
+TAMPER-EVIDENT EVIDENCE LEDGER
+
+↓
+
+EXECUTIVE DECISION
+
+==================================================
+63. FINAL ACCEPTANCE CRITERIA
+==================================================
+
+Before considering the application complete, verify:
+
+[ ] BLACKSTAR logo uses the exact supplied image
+
+[ ] No cream/beige default theme remains
+
+[ ] Dark cybersecurity theme is implemented
+
+[ ] Target organization is configurable
+
+[ ] SRMIST is only the initial demo target
+
+[ ] Application works conceptually for arbitrary authorized domains
+
+[ ] Shodan integration is real
+
+[ ] Shodan API key is server-side
+
+[ ] crt.sh integration works
+
+[ ] NVD integration works
+
+[ ] CISA KEV integration works
+
+[ ] EPSS integration works
+
+[ ] RDAP/DNS integration works where practical
+
+[ ] Source health is real
+
+[ ] No fake source-connected states
+
+[ ] Attack surface is dynamically generated
+
+[ ] Evidence has provenance
+
+[ ] Evidence fusion works
+
+[ ] Vulnerability correlation works
+
+[ ] Risk graph works
+
+[ ] Cascading risk is modelled
+
+[ ] Adaptive attacker model exists
+
+[ ] Stackelberg optimization exists
+
+[ ] Monte Carlo simulation exists
+
+[ ] Financial risk is expressed in INR
+
+[ ] What-if analysis works
+
+[ ] Investment optimizer works
+
+[ ] Budget slider changes results
+
+[ ] Evidence ledger uses SHA-256 chaining
+
+[ ] Ledger verification works
+
+[ ] Live/modelled/simulated data are clearly separated
+
+[ ] Scan history exists
+
+[ ] Change detection exists where possible
+
+[ ] Executive view exists
+
+[ ] Technical view exists
+
+[ ] Report export exists
+
+[ ] Error states are graceful
+
+[ ] Application works without optional API keys
+
+[ ] No invented live vulnerabilities
+
+[ ] No invented IPs/ports/CVEs
+
+[ ] No active exploitation or intrusive scanning
+
+[ ] Dashboard is responsive
+
+[ ] Dashboard looks premium and competition-ready
+
+==================================================
+64. PRIORITY ORDER
+==================================================
+
+If development time is limited, prioritize in exactly this order:
+
+P0 — MUST HAVE
+
+1. Exact BLACKSTAR logo
+2. Premium dark cybersecurity redesign
+3. Configurable organization/target
+4. Real Shodan integration
+5. Real crt.sh integration
+6. NVD integration
+7. CISA KEV integration
+8. EPSS integration
+9. Dynamic attack surface
+10. Evidence provenance
+11. Evidence fusion
+12. Risk graph
+13. Financial risk
+14. Monte Carlo
+15. What-if analysis
+16. Investment optimizer
+17. Adaptive attacker / Stackelberg model
+18. SHA-256 evidence ledger
+19. Source health
+20. Clear LIVE/CORRELATED/MODELLED/SIMULATED states
+
+P1 — IMPORTANT
+
+21. RDAP
+22. DNS intelligence
+23. Scan history
+24. Change detection
+25. Executive/technical views
+26. Report export
+27. MITRE ATT&CK mapping
+28. Natural-language risk explanation
+
+P2 — NICE TO HAVE
+
+29. Censys
+30. VirusTotal
+31. GreyNoise
+32. SecurityTrails
+33. urlscan
+34. Public testnet anchoring
+35. Extended quantum-readiness roadmap
+
+==================================================
+65. FINAL IMPLEMENTATION RULE
+==================================================
+
+DO NOT stop after building the frontend.
+
+DO NOT create static mock data just to make charts look impressive.
+
+DO NOT create fake API responses that look real.
+
+DO NOT label modelled results as live.
+
+DO NOT hard-code SRMIST into the architecture.
+
+DO NOT leave major buttons non-functional.
+
+DO NOT create placeholder pages saying "Coming Soon" for P0 features.
+
+Build the actual working pipeline.
+
+When a real external source is unavailable, fail gracefully and clearly identify the missing source.
+
+When the system must use assumptions for financial modelling, expose those assumptions and label them MODELLED.
+
+When the system must demonstrate an attack path without sufficient real infrastructure evidence, label that relationship MODELLED or SIMULATED.
+
+The goal is not to make BLACKSTAR look like it has discovered something it has not.
+
+The goal is to make BLACKSTAR demonstrate that it can take real public cyber evidence, combine it with transparent quantitative models, and turn it into an economically optimized security decision.
+
+==================================================
+66. FINAL PRODUCT STATEMENT
+==================================================
+
+The final BLACKSTAR experience should communicate this story:
+
+PUBLIC CYBER EVIDENCE
+
+↓
+
+WHAT IS EXPOSED?
+
+↓
+
+WHAT CAN AN ADAPTIVE ATTACKER REACH?
+
+↓
+
+HOW CAN THE RISK CASCADE?
+
+↓
+
+WHAT COULD IT COST?
+
+↓
+
+WHERE SHOULD WE INVEST?
+
+↓
+
+HOW MUCH RISK DOES THAT REMOVE?
+
+↓
+
+CAN WE PROVE WHERE THE DECISION CAME FROM?
+
+That is the product.
+
+Build BLACKSTAR accordingly.

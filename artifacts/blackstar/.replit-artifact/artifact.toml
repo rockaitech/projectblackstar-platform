@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "BLACKSTAR"
+description = "A production-grade cyber-risk command center that turns passive public intelligence into explainable attack-surface insight, financial loss estimates, and optimized security investment decisions."
+version = "1.0.0"
+id = "artifacts/blackstar"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25375
+
+[services.development]
+run = "pnpm --filter @workspace/blackstar run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/blackstar", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/blackstar/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25375"
+BASE_PATH = "/"

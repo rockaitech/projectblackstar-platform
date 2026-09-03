@@ -3,20 +3,22 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: BLACKSTAR passive cyber-risk quantification platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: targets
+  - name: intelligence
+  - name: modelling
+  - name: sources
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +26,766 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /targets:
+    get:
+      operationId: listTargets
+      tags: [targets]
+      summary: List analyzed targets
+      responses:
+        "200":
+          description: Targets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Target"
+    post:
+      operationId: createTarget
+      tags: [targets]
+      summary: Create a target organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TargetInput"
+      responses:
+        "201":
+          description: Created target
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Target"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /targets/{id}:
+    get:
+      operationId: getTarget
+      tags: [targets]
+      summary: Get a target organization
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Target
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Target"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      operationId: updateTarget
+      tags: [targets]
+      summary: Update target settings
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TargetUpdate"
+      responses:
+        "200":
+          description: Updated target
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Target"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /targets/{id}/analyze:
+    post:
+      operationId: analyzeTarget
+      tags: [intelligence]
+      summary: Run a passive analysis
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyzeInput"
+      responses:
+        "200":
+          description: Analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Analysis"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /targets/{id}/assets:
+    get:
+      operationId: listAssets
+      tags: [intelligence]
+      summary: List attack surface assets
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+  /targets/{id}/evidence:
+    get:
+      operationId: listEvidence
+      tags: [intelligence]
+      summary: List fused evidence
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Evidence
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Evidence"
+  /targets/{id}/vulnerabilities:
+    get:
+      operationId: listVulnerabilities
+      tags: [intelligence]
+      summary: List correlated vulnerabilities
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Vulnerabilities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vulnerability"
+  /targets/{id}/risk:
+    get:
+      operationId: getRisk
+      tags: [modelling]
+      summary: Get risk and financial model
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Risk model
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskModel"
+  /targets/{id}/graph:
+    get:
+      operationId: getGraph
+      tags: [modelling]
+      summary: Get evidence-backed risk graph
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Graph
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Graph"
+  /targets/{id}/simulate:
+    post:
+      operationId: simulateAttack
+      tags: [modelling]
+      summary: Run adaptive attacker simulation
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulationInput"
+      responses:
+        "200":
+          description: Simulation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Simulation"
+  /targets/{id}/optimize:
+    post:
+      operationId: optimizeControls
+      tags: [modelling]
+      summary: Optimize security investment
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OptimizerInput"
+      responses:
+        "200":
+          description: Optimized portfolio
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Portfolio"
+  /targets/{id}/ledger:
+    get:
+      operationId: getLedger
+      tags: [intelligence]
+      summary: Get tamper-evident evidence ledger
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Ledger
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LedgerRecord"
+  /targets/{id}/ledger/verify:
+    post:
+      operationId: verifyLedger
+      tags: [intelligence]
+      summary: Verify the SHA-256 evidence chain
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Verification
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LedgerVerification"
+  /targets/{id}/scans:
+    get:
+      operationId: listScans
+      tags: [intelligence]
+      summary: List scan history
+      parameters:
+        - $ref: "#/components/parameters/TargetId"
+      responses:
+        "200":
+          description: Scan history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ScanSnapshot"
+  /sources/status:
+    get:
+      operationId: getSourceStatus
+      tags: [sources]
+      summary: Get passive source health
+      responses:
+        "200":
+          description: Source health
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SourceStatus"
+  /what-if:
+    post:
+      operationId: runWhatIf
+      tags: [modelling]
+      summary: Recalculate model under a control scenario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WhatIfInput"
+      responses:
+        "200":
+          description: Scenario comparison
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WhatIfResult"
 components:
+  parameters:
+    TargetId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: number
+        minimum: 1
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
   schemas:
     HealthStatus:
       type: object
       properties:
         status:
           type: string
+      required: [status]
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+    Provenance:
+      type: string
+      enum: [LIVE, CORRELATED, MODELLED, SIMULATED, UNAVAILABLE]
+    Mode:
+      type: string
+      enum: [LIVE_INTELLIGENCE, SIMULATION]
+    RiskLevel:
+      type: string
+      enum: [CRITICAL, HIGH, MEDIUM, LOW, MINIMAL]
+    Target:
+      type: object
+      properties:
+        id: { type: number }
+        organizationName: { type: string }
+        primaryDomain: { type: string }
+        additionalDomains:
+          type: array
+          items: { type: string }
+        organizationType: { type: string }
+        region: { type: string }
+        annualValue: { type: number }
+        users: { type: number }
+        criticalSystems: { type: number }
+        securityBudget: { type: number }
+        mode:
+          $ref: "#/components/schemas/Mode"
+        lastAnalyzed:
+          type: ["string", "null"]
+        nextReview:
+          type: ["string", "null"]
+        createdAt: { type: string }
       required:
-        - status
-
+        - id
+        - organizationName
+        - primaryDomain
+        - additionalDomains
+        - organizationType
+        - region
+        - annualValue
+        - users
+        - criticalSystems
+        - securityBudget
+        - mode
+        - lastAnalyzed
+        - nextReview
+        - createdAt
+    TargetInput:
+      type: object
+      properties:
+        organizationName: { type: string, minLength: 2 }
+        primaryDomain: { type: string, minLength: 3 }
+        additionalDomains:
+          type: array
+          items: { type: string }
+        organizationType: { type: string }
+        region: { type: string }
+        annualValue: { type: number, minimum: 0 }
+        users: { type: number, minimum: 0 }
+        criticalSystems: { type: number, minimum: 0 }
+        securityBudget: { type: number, minimum: 0 }
+        mode:
+          $ref: "#/components/schemas/Mode"
+      required: [organizationName, primaryDomain]
+    TargetUpdate:
+      type: object
+      properties:
+        organizationName: { type: string, minLength: 2 }
+        primaryDomain: { type: string, minLength: 3 }
+        additionalDomains:
+          type: array
+          items: { type: string }
+        organizationType: { type: string }
+        region: { type: string }
+        annualValue: { type: number, minimum: 0 }
+        users: { type: number, minimum: 0 }
+        criticalSystems: { type: number, minimum: 0 }
+        securityBudget: { type: number, minimum: 0 }
+        mode:
+          $ref: "#/components/schemas/Mode"
+    AnalyzeInput:
+      type: object
+      properties:
+        mode:
+          $ref: "#/components/schemas/Mode"
+    SourceStatus:
+      type: object
+      properties:
+        name: { type: string }
+        label: { type: string }
+        status: { type: string }
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        lastUpdated:
+          type: ["string", "null"]
+        detail: { type: string }
+      required: [name, label, status, provenance, lastUpdated, detail]
+    Evidence:
+      type: object
+      properties:
+        id: { type: string }
+        source: { type: string }
+        target: { type: string }
+        observation: { type: string }
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        observedAt: { type: string }
+        confidence: { type: number }
+        metadata:
+          type: object
+          additionalProperties: true
+      required: [id, source, target, observation, provenance, observedAt, confidence]
+    Asset:
+      type: object
+      properties:
+        id: { type: string }
+        kind: { type: string }
+        hostname: { type: string }
+        ip:
+          type: ["string", "null"]
+        ports:
+          type: array
+          items: { type: number }
+        services:
+          type: array
+          items: { type: string }
+        product:
+          type: ["string", "null"]
+        version:
+          type: ["string", "null"]
+        risk:
+          $ref: "#/components/schemas/RiskLevel"
+        score: { type: number }
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        evidenceCount: { type: number }
+        lastObserved: { type: string }
+        internetFacing: { type: boolean }
+      required:
+        - id
+        - kind
+        - hostname
+        - ip
+        - ports
+        - services
+        - product
+        - version
+        - risk
+        - score
+        - provenance
+        - evidenceCount
+        - lastObserved
+        - internetFacing
+    Vulnerability:
+      type: object
+      properties:
+        cve: { type: string }
+        asset: { type: string }
+        product: { type: string }
+        version: { type: string }
+        cvss: { type: number }
+        severity: { type: string }
+        epss: { type: number }
+        kev: { type: boolean }
+        kevDate:
+          type: ["string", "null"]
+        exposure: { type: number }
+        risk:
+          $ref: "#/components/schemas/RiskLevel"
+        description: { type: string }
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        evidence:
+          type: array
+          items: { type: string }
+      required:
+        - cve
+        - asset
+        - product
+        - version
+        - cvss
+        - severity
+        - epss
+        - kev
+        - kevDate
+        - exposure
+        - risk
+        - description
+        - provenance
+        - evidence
+    RiskModel:
+      type: object
+      properties:
+        score: { type: number }
+        level:
+          $ref: "#/components/schemas/RiskLevel"
+        attackSurfaceScore: { type: number }
+        criticalFindings: { type: number }
+        expectedAnnualLoss: { type: number }
+        medianLoss: { type: number }
+        p75Loss: { type: number }
+        p90Loss: { type: number }
+        p95Loss: { type: number }
+        confidenceLow: { type: number }
+        confidenceHigh: { type: number }
+        maximumLoss: { type: number }
+        riskReductionOpportunity: { type: number }
+        distribution:
+          type: array
+          items: { type: number }
+        trend:
+          type: array
+          items:
+            type: object
+            properties:
+              label: { type: string }
+              score: { type: number }
+              loss: { type: number }
+            required: [label, score, loss]
+        factors:
+          type: array
+          items:
+            type: object
+            properties:
+              label: { type: string }
+              value: { type: number }
+              detail: { type: string }
+              provenance:
+                $ref: "#/components/schemas/Provenance"
+            required: [label, value, detail, provenance]
+        assumptions:
+          type: array
+          items: { type: string }
+      required:
+        - score
+        - level
+        - attackSurfaceScore
+        - criticalFindings
+        - expectedAnnualLoss
+        - medianLoss
+        - p75Loss
+        - p90Loss
+        - p95Loss
+        - confidenceLow
+        - confidenceHigh
+        - maximumLoss
+        - riskReductionOpportunity
+        - distribution
+        - trend
+        - factors
+        - assumptions
+    Graph:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              label: { type: string }
+              kind: { type: string }
+              risk:
+                $ref: "#/components/schemas/RiskLevel"
+              score: { type: number }
+              provenance:
+                $ref: "#/components/schemas/Provenance"
+              detail: { type: string }
+            required: [id, label, kind, risk, score, provenance, detail]
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              source: { type: string }
+              target: { type: string }
+              probability: { type: number }
+              label: { type: string }
+              provenance:
+                $ref: "#/components/schemas/Provenance"
+            required: [id, source, target, probability, label, provenance]
+      required: [nodes, edges]
+    SimulationInput:
+      type: object
+      properties:
+        assetId: { type: string }
+        controls:
+          type: array
+          items: { type: string }
+      required: [assetId]
+    Simulation:
+      type: object
+      properties:
+        assetId: { type: string }
+        defenderStrategy: { type: string }
+        attackerResponse: { type: string }
+        expectedLoss: { type: number }
+        successProbability: { type: number }
+        residualProbability: { type: number }
+        payoff: { type: number }
+        optimalDefense: { type: string }
+        stages:
+          type: array
+          items:
+            type: object
+            properties:
+              label: { type: string }
+              technique: { type: string }
+              probability: { type: number }
+              residual: { type: number }
+              payoff: { type: number }
+              control: { type: string }
+            required: [label, technique, probability, residual, payoff, control]
+      required:
+        - assetId
+        - defenderStrategy
+        - attackerResponse
+        - expectedLoss
+        - successProbability
+        - residualProbability
+        - payoff
+        - optimalDefense
+        - stages
+    OptimizerInput:
+      type: object
+      properties:
+        budget: { type: number, minimum: 0 }
+      required: [budget]
+    Control:
+      type: object
+      properties:
+        name: { type: string }
+        cost: { type: number }
+        effectiveness: { type: number }
+        reduction: { type: number }
+        value: { type: number }
+        coverage: { type: number }
+        rationale: { type: string }
+      required: [name, cost, effectiveness, reduction, value, coverage, rationale]
+    Portfolio:
+      type: object
+      properties:
+        budget: { type: number }
+        baselineAle: { type: number }
+        naiveAle: { type: number }
+        optimizedAle: { type: number }
+        reduction: { type: number }
+        roi: { type: number }
+        controls:
+          type: array
+          items:
+            $ref: "#/components/schemas/Control"
+        selected:
+          type: array
+          items: { type: string }
+        marginal:
+          $ref: "#/components/schemas/Control"
+      required: [budget, baselineAle, naiveAle, optimizedAle, reduction, roi, controls, selected, marginal]
+    LedgerRecord:
+      type: object
+      properties:
+        recordId: { type: string }
+        timestamp: { type: string }
+        source: { type: string }
+        target: { type: string }
+        observation: { type: string }
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        previousHash: { type: string }
+        recordHash: { type: string }
+      required: [recordId, timestamp, source, target, observation, provenance, previousHash, recordHash]
+    LedgerVerification:
+      type: object
+      properties:
+        verified: { type: boolean }
+        message: { type: string }
+        checked: { type: number }
+      required: [verified, message, checked]
+    ScanSnapshot:
+      type: object
+      properties:
+        id: { type: string }
+        timestamp: { type: string }
+        mode:
+          $ref: "#/components/schemas/Mode"
+        assets: { type: number }
+        vulnerabilities: { type: number }
+        riskScore: { type: number }
+        change:
+          type: ["string", "null"]
+      required: [id, timestamp, mode, assets, vulnerabilities, riskScore, change]
+    Analysis:
+      type: object
+      properties:
+        target:
+          $ref: "#/components/schemas/Target"
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Asset"
+        vulnerabilities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Vulnerability"
+        evidence:
+          type: array
+          items:
+            $ref: "#/components/schemas/Evidence"
+        risk:
+          $ref: "#/components/schemas/RiskModel"
+        graph:
+          $ref: "#/components/schemas/Graph"
+        sources:
+          type: array
+          items:
+            $ref: "#/components/schemas/SourceStatus"
+        ledger:
+          type: array
+          items:
+            $ref: "#/components/schemas/LedgerRecord"
+      required: [target, assets, vulnerabilities, evidence, risk, graph, sources, ledger]
+    WhatIfInput:
+      type: object
+      properties:
+        targetId: { type: number }
+        control: { type: string }
+        value: { type: number }
+      required: [targetId, control, value]
+    WhatIfResult:
+      type: object
+      properties:
+        control: { type: string }
+        beforeLoss: { type: number }
+        afterLoss: { type: number }
+        beforeP90: { type: number }
+        afterP90: { type: number }
+        beforeScore: { type: number }
+        afterScore: { type: number }
+        residualRisk:
+          $ref: "#/components/schemas/RiskLevel"
+        explanation: { type: string }
+      required: [control, beforeLoss, afterLoss, beforeP90, afterP90, beforeScore, afterScore, residualRisk, explanation]
