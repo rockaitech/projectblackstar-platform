@@ -238,7 +238,8 @@ function FinancialRisk({ data }: { data: ReturnType<typeof useBlackstarData> }) 
 
 function AttackSimulation({ data }: { data: ReturnType<typeof useBlackstarData> }) {
   const sim = useSimulateAttack();
-  const [assetId, setAssetId] = useState(data.assets[0]?.id ?? '');
+  const [pickedAssetId, setAssetId] = useState('');
+  const assetId = pickedAssetId || data.assets[0]?.id || '';
   const [result, setResult] = useState<any>(null);
   const run = () => { if (assetId) sim.mutate({ id: data.targetId, data: { assetId, controls: ['MFA', 'segmentation'] } }, { onSuccess: setResult }); };
   return <div className="content"><PageIntro eyebrow="Prediction / adaptive attacker" title="Attack simulation" subtitle="Stackelberg analysis: choose a defense, then observe the rational attacker response. Outputs are simulated — never live findings." actions={<button className="btn btn-primary" onClick={run} disabled={sim.isPending || !assetId} data-testid="button-run-simulation"><Play size={14} /> {sim.isPending ? 'Simulating…' : 'Run simulation'}</button>} />
@@ -248,7 +249,8 @@ function AttackSimulation({ data }: { data: ReturnType<typeof useBlackstarData> 
 function Optimizer({ data }: { data: ReturnType<typeof useBlackstarData> }) {
   const optimize = useOptimizeControls();
   const whatIf = useRunWhatIf();
-  const [budget, setBudget] = useState(data.target?.securityBudget ?? 250000);
+  const [pickedBudget, setBudget] = useState<number | null>(null);
+  const budget = pickedBudget ?? data.target?.securityBudget ?? 250000;
   const [portfolio, setPortfolio] = useState<any>(null);
   const [whatIfResult, setWhatIfResult] = useState<any>(null);
   const run = () => optimize.mutate({ id: data.targetId, data: { budget: Number(budget) } }, { onSuccess: setPortfolio });
@@ -287,17 +289,17 @@ function Settings({ data }: { data: ReturnType<typeof useBlackstarData> }) {
 function AppContent() {
   const data = useBlackstarData();
   return <Shell data={data}><ErrorBoundary resetKey={useLocation()[0]}><Switch>
-    <Route path="/" component={() => <Overview data={data} />} />
-    <Route path="/attack-surface" component={() => <Surface data={data} />} />
-    <Route path="/evidence-fusion" component={() => <EvidenceFusion data={data} />} />
-    <Route path="/vulnerabilities" component={() => <Vulnerabilities data={data} />} />
-    <Route path="/risk-graph" component={() => <RiskGraph data={data} />} />
-    <Route path="/financial-risk" component={() => <FinancialRisk data={data} />} />
-    <Route path="/attack-simulation" component={() => <AttackSimulation data={data} />} />
-    <Route path="/optimizer" component={() => <Optimizer data={data} />} />
-    <Route path="/ledger" component={() => <Ledger data={data} />} />
+    <Route path="/"><Overview data={data} /></Route>
+    <Route path="/attack-surface"><Surface data={data} /></Route>
+    <Route path="/evidence-fusion"><EvidenceFusion data={data} /></Route>
+    <Route path="/vulnerabilities"><Vulnerabilities data={data} /></Route>
+    <Route path="/risk-graph"><RiskGraph data={data} /></Route>
+    <Route path="/financial-risk"><FinancialRisk data={data} /></Route>
+    <Route path="/attack-simulation"><AttackSimulation data={data} /></Route>
+    <Route path="/optimizer"><Optimizer data={data} /></Route>
+    <Route path="/ledger"><Ledger data={data} /></Route>
     <Route path="/methodology" component={Methodology} />
-    <Route path="/settings" component={() => <Settings data={data} />} />
+    <Route path="/settings"><Settings data={data} /></Route>
     <Route component={NotFound} />
   </Switch></ErrorBoundary></Shell>;
 }
