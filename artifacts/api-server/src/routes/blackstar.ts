@@ -26,6 +26,17 @@ import { blackstarScans, blackstarTargets, db } from "@workspace/db";
 
 const router: IRouter = Router();
 
+// Seed once per process; concurrent first requests share the same promise so the demo target is inserted exactly once.
+let seeding: Promise<unknown> | null = null;
+router.use(async (_req, _res, next) => {
+  seeding ??= ensureSeedTarget().catch((error: unknown) => {
+    seeding = null;
+    throw error;
+  });
+  await seeding;
+  next();
+});
+
 type Provenance =
   | "LIVE"
   | "CORRELATED"
@@ -283,7 +294,8 @@ async function fetchJson(
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(url, {
-      headers: { Accept: "application/json", ...headers },
+      // rdap.org rejects Node's default user agent with 403.
+      headers: { Accept: "application/json", "User-Agent": "BLACKSTAR/0.1 (+passive cyber-risk research)", ...headers },
       signal: controller.signal,
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -481,7 +493,7 @@ function buildRisk(
   const responseCost = 200000 + score * 4500;
   const recoveryCost = 300000 + target.criticalSystems * 55000;
   const impact = breachCost * (0.12 + score / 180) + downtimeCost + responseCost + recoveryCost + annualValue * 0.00025;
-  const initialProbability = clamp(0.06 + score / 220, 0.05, 0.74) / 100;
+  const initialProbability = clamp(0.06 + score / 220, 0.05, 0.74);
   const expected = impact * initialProbability * (mode === "SIMULATION" ? 1 : 0.72);
 
   let seed = seedNumber(`${target.primaryDomain}:${target.id}:${score}`);
