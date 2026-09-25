@@ -1,0 +1,5 @@
+{
+  "framework": null,
+  "installCommand": "npx -y pnpm@11.25.0 install --frozen-lockfile",
+  "buildCommand": "node artifacts/api-server/build-vercel.mjs"
+}
